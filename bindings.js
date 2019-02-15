@@ -151,6 +151,8 @@ exports.getFileName = function getFileName(calling_file) {
   Error.prepareStackTrace = function(e, st) {
     for (var i = 0, l = st.length; i < l; i++) {
       fileName = st[i].getFileName();
+      if (fileName.startsWith('file:///'))
+        fileName = fileName.substr(7 + (process.platform === 'win32'));
       if (fileName !== __filename) {
         if (calling_file) {
           if (fileName !== calling_file) {
